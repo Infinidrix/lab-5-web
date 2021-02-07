@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         result = [];
         tags.forEach( (tagName) => {
             var element = clock.appendChild(document.createElement(tagName));
-            if (tagName === 'i') result.push(element);
+            result.push(element);
         });
         return result;
     }
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
             now.getHours() * 30 + (Math.floor(now.getMinutes() / 12) * 6)
         ) + 'deg)';
         clockElements[1].style.transform = 'rotate(' + (
-            ((now.getSeconds / 60) + now.getMinutes()) * 6
+            ((now.getSeconds() / 60) + now.getMinutes()) * 6
         ) + 'deg)';
         clockElements[2].style.transform = 'rotate(' + (
             (now.getSeconds() + (now.getMilliseconds() / 1000)) * 6
@@ -35,6 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(loadDataNew, 5000);
 });
 
+function refresh(){
+    let imageNode = document.querySelector("#photo-booth");
+    fetch( "https://picsum.photos/400" ) 
+    .then( r => r.arrayBuffer() ) 
+    .then( ab => URL.createObjectURL( new Blob( [ ab ], { type: 'image/jpeg' } ) ) ) 
+    .then( src => imageNode.src = src ) 
+    .catch( console.error );
+}
 
 //load a single customer function 
 function load_fromPlaceHolder() {

@@ -38,3 +38,8 @@
   #clock i:last-of-type {
     background-color:#F00;
   }
+
+  .carousel-inner > .carousel-item {
+    height: 400px;
+    width: 400px;
+ }
