@@ -4,7 +4,35 @@ const postDiv3 = document.getElementById('thePosts');
 //Load Every thing ....
 document.addEventListener("DOMContentLoaded", () => {
     //load_fromPlaceHolder();
-    loadDataNew();
+    var clockElements = makeClockElements(
+        'i', 'i', 'i'
+    );
+    
+    function makeClockElements(...tags) {
+        var clock = document.getElementById('clock'),
+        result = [];
+        tags.forEach( (tagName) => {
+            var element = clock.appendChild(document.createElement(tagName));
+            if (tagName === 'i') result.push(element);
+        });
+        return result;
+    }
+    
+    function clockUpdate() {
+        var now = new Date();
+        clockElements[0].style.transform = 'rotate(' + (
+            now.getHours() * 30 + (Math.floor(now.getMinutes() / 12) * 6)
+        ) + 'deg)';
+        clockElements[1].style.transform = 'rotate(' + (
+            ((now.getSeconds / 60) + now.getMinutes()) * 6
+        ) + 'deg)';
+        clockElements[2].style.transform = 'rotate(' + (
+            (now.getSeconds() + (now.getMilliseconds() / 1000)) * 6
+        ) + 'deg)';
+    }
+    clockUpdate();
+    setInterval(clockUpdate, 100);
+    setTimeout(loadDataNew, 5000);
 });
 
 
@@ -24,7 +52,7 @@ function load_fromPlaceHolder() {
         
                 <div class="item">
                 <div class="image">
-                    <img src=" https://images.unsplash.com/photo-1499482125586-91609c0b5fd4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">
+                    <img src="https://picsum.photos/200">
                 </div>
                 <div class="content">
                     <a class="header" href="#" id="bTitle">
@@ -73,7 +101,7 @@ function loadDataNew() {
 
         <div class="item">
         <div class="image">
-            <img src=" https://images.unsplash.com/photo-1499482125586-91609c0b5fd4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">
+            <img src="https://picsum.photos/200">
         </div>
         <div class="content">
             <a class="header" href="#" id="bTitle">
