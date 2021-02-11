@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     clockUpdate();
     setInterval(clockUpdate, 100);
-    setTimeout(loadDataNew, 5000);
+    setTimeout(loadDataNew, 3000);
 });
 
 refresh()
