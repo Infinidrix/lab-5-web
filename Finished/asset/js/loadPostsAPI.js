@@ -1,6 +1,27 @@
+// State vars 
+let allPosts = [{title: ""}];
+
 // UI Vars 
 const postDiv3 = document.getElementById('thePosts');
+document.querySelector("#search-field").addEventListener("input", (e) => {
+    document.querySelector("#loading-search").classList.add("loading");
+    setTimeout(() => {postDiv3.innerHTML = ""
+    let query = e.target.value;
+    postResults(allPosts.filter((post) => post.title.includes(query)))
+    document.querySelector("#loading-search").classList.remove("loading");
+    }, 1200);
+})
+document.querySelector("#desc").addEventListener("click", (e) => {e.preventDefault();sortArticles(1);} );
+document.querySelector("#ascd").addEventListener("click", (e) => {e.preventDefault();sortArticles(-1)} );
+function sortArticles(mult) {
 
+    postResults(allPosts.sort((a, b) => {
+        if(a.title < b.title) { return -1 * mult; }
+        if(a.title > b.title) { return 1 * mult; }
+        return 0;
+    }));
+
+}
 //Load Every thing ....
 document.addEventListener("DOMContentLoaded", () => {
     //load_fromPlaceHolder();
@@ -35,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(loadDataNew, 5000);
 });
 
+refresh()
 function refresh(){
     let imageNode = document.querySelector("#photo-booth");
     fetch( "https://picsum.photos/400" ) 
@@ -52,34 +74,9 @@ function load_fromPlaceHolder() {
         .then(function(res) {
             return res.json(); //return the JSON Promise
         })
-        .then(function(posts) {
-            //iterate over each post [100 posts]
-            let output = '';
-            posts.forEach(function(post) {
-                output += `
-        
-                <div class="item">
-                <div class="image">
-                    <img src="https://picsum.photos/200">
-                </div>
-                <div class="content">
-                    <a class="header" href="#" id="bTitle">
-                    ${post.title.toUpperCase()}
-                    </a>
-                    <div class="description">
-                        <p id="bDesc">
-                        ${post.body}
-                        </p>
-                    </div>
-                    <div class="extra">
-                        <a class="ui floated basic violet button" href="#">Read Mores</a>
-                    </div>
-                </div>
-            </div>
-        
-        `;
-            });
-            postDiv3.innerHTML = output;
+        .then(posts => {
+            allPosts = posts; 
+            postResults(posts); 
         })
         .catch(function(err) {
             console.log(err);
@@ -88,7 +85,36 @@ function load_fromPlaceHolder() {
 
 
 }
+function postResults(posts){
+        //iterate over each post [100 posts]
+        let output = '';
 
+        posts.forEach(function(post) {
+            output += `
+    
+            <div class="item">
+            <div class="image">
+                <img src="https://picsum.photos/200">
+            </div>
+            <div class="content">
+                <a class="header" href="#" id="bTitle">
+                ${post.title.toUpperCase()}
+                </a>
+                <div class="description">
+                    <p id="bDesc">
+                    ${post.body}
+                    </p>
+                </div>
+                <div class="extra">
+                    <a class="ui floated basic violet button" href="#">Read Mores</a>
+                </div>
+            </div>
+        </div>
+    
+    `;
+        });
+        postDiv3.innerHTML = output;
+}
 async function load_fromPlaceHolder_new() {
 
     //open the request 
@@ -101,35 +127,12 @@ async function load_fromPlaceHolder_new() {
 }
 
 function loadDataNew() {
-    load_fromPlaceHolder_new().then(function(posts) {
-            //iterate over each post [100 posts]
-            let output = '';
-            posts.forEach(function(post) {
-                output += `
-
-        <div class="item">
-        <div class="image">
-            <img src="https://picsum.photos/200">
-        </div>
-        <div class="content">
-            <a class="header" href="#" id="bTitle">
-            ${post.title.toUpperCase()}
-            </a>
-            <div class="description">
-                <p id="bDesc">
-                ${post.body}
-                </p>
-            </div>
-            <div class="extra">
-                <a class="ui floated basic violet button" href="#">Read Mores</a>
-            </div>
-        </div>
-    </div>
-
-`;
-            });
-            postDiv3.innerHTML = output;
-        })
+    load_fromPlaceHolder_new().then(posts => {
+        allPosts = posts; 
+        // console.log(allPosts);
+        // console.log("HIIII")
+        postResults(posts); 
+    })
         .catch(function(err) {
             console.log(err);
         });

@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="container bg-dark">
+        <div class="container bg-dark p-0">
             <div id="carouselExampleIndicators" class="carousel slide">
                 <div class="carousel-inner">
                   <div class="carousel-item active w-100 h-100">
@@ -70,6 +70,30 @@
 
             <div class="ui green message">
                 <i class="star icon"></i> All Blogs From JSON placeholder API
+            </div>
+            
+            <div class="container fluid">
+              <div class="row">
+                <!-- The search bar -->
+                <div class="ui fluid search col-6" id="loading-search">
+                  <div class="ui icon input">
+                    <input id="search-field" class="prompt" type="text" placeholder="Search articles...">
+                    <i class="search icon"></i>
+                  </div>
+                  <div class="results"></div>
+                </div>
+    
+                <!-- Sorting -->
+                <div class="d-flex align-items-end dropdown col-6" style="padding-left: 167px; padding-right: 0px">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#" id="desc">Desending</a></li>
+                    <li><a class="dropdown-item" href="#" id="ascd">Ascending</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="ui divided items" id="thePosts">
                 <div class="ui segment" style="height: 100px;">
